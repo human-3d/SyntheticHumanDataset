@@ -1,5 +1,5 @@
 # Synthetic Humans in Indoor Scenes Data Generation Pipeline
-This repository contains the code to generate synthetic human-scene interaction dataset used in [3D Segmentation of Humans in Point Clouds with Synthetic Data](https://arxiv.org/abs/2212.00786)
+This repository contains the code to generate synthetic human-scene interaction dataset used in [3D Segmentation of Humans in Point Clouds with Synthetic Data](https://arxiv.org/abs/2212.00786). Please stay tuned for the code to obtain the point clouds with the simulated Kinect noise - expected release date: September 2023!
 
 ## Prerequisites  
 
