@@ -4,8 +4,8 @@ from pathlib import Path
 
 
 class Config:
-    def __init__(self):
-        config_file = Path(__file__).parent / "config.yaml"
+    def __init__(self, config_name="config.yaml"):
+        config_file = Path(__file__).parent / config_name
         assert config_file.exists(), "Config file does not exist!"
 
         with open(config_file, "r") as stream:
@@ -20,6 +20,7 @@ class Config:
             self.selected_bodies_path = paths["selected_bodies"]
             self.camera_parameters_path = paths["camera_parameters"]
             self.faces_segmentation_path = paths["faces_segmentation"]
+            self.kinect_dot_pattern = paths["kinect_dot_pattern"]
 
             # ___ camera parameters ___
             camera = settings["camera"]

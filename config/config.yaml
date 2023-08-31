@@ -138,8 +138,7 @@ rendering:
     123: [98., 58., 83.] # leftUpLeg
     124: [222., 25., 45.] # leftHand
     125: [75., 233., 65.] # hips
-
-
-  pcd_computation:
-    add_kinect_noise: True
-    verbose: True
+    
+pcd_computation:
+  add_kinect_noise: True
+  verbose: True
