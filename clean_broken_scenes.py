@@ -19,8 +19,11 @@ def clean_broken_scenes(cfg):
         label_images = [f for f in (scene / "label_image").glob("*.png")]
         if len(label_images) != cfg.samples_per_scene:
             broken_scenes.append(scene)
-
-    print(f"[INFO] Following broken scenes are getting removed:")
-    for s in broken_scenes:
-        print(s.stem)
-        shutil.rmtree(s)
+    
+    if len(broken_scenes)>0:
+        print(f"[INFO] Following broken scenes are getting removed:")
+        for s in broken_scenes:
+            print(s.stem)
+            shutil.rmtree(s)
+    else:
+        print("[INFO] No broken scenes found!")

@@ -1,1 +1,4 @@
 __pycache__
+*_debug*
+examples/demo_scene_inst_visualization.ply
+examples/demo_scene_merged_part_visualization.ply

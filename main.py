@@ -1,11 +1,12 @@
 from config.config import Config
 from render_synthetic_humans import render_synthetic_humans
 from clean_broken_scenes import clean_broken_scenes
-#from render_convert_to_pcd import extract_scene_pcds
+from render_convert_to_pcd import extract_scene_pcds
 
 if __name__ == "__main__":
     # Load config
-    cfg = Config()
+    config_path = "config/config.yaml"
+    cfg = Config(config_path)
 
     # Start by checking broken scenes in the output directory
     clean_broken_scenes(cfg)
@@ -17,8 +18,10 @@ if __name__ == "__main__":
         pipeline_broke = not render_synthetic_humans(cfg)
         clean_broken_scenes(cfg)
 
-    print("[INFO] Dataset generation is complete!")
+    print("[INFO] Scene rendering is complete!")
 
     # obtain point clouds
-    #extract_scene_pcds(cfg)
+    extract_scene_pcds(cfg)
+
+    print("[INFO] Dataset generation is complete!")
 
