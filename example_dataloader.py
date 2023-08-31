@@ -2,10 +2,12 @@ import pandas as pd
 from plyfile import PlyData
 import numpy as np
 import open3d as o3d
-from torch.utils.data import Dataset
 from utils.color_maps_and_labels import COLOR_MAP_INSTANCES, MERGED_BODY_PART_COLORS
 
-class HumanSegmentationDataset(Dataset):
+# Note: If you would like to use this dataset as a Torch dataset, simply inherit from torch.utils.data import Dataset, e.g.:
+# from torch.utils.data import Dataset
+# class HumanSegmentationDataset(Dataset):
+class HumanSegmentationDataset():
     def __init__(self, file_list):
         # some color maps in case you need to visualize
         # we rendered the segmentation maps including scene semantic labels, 

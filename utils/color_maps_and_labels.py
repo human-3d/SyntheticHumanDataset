@@ -1,5 +1,3 @@
-BODY_PARTS_COLOR_MAP_IDS = set(tuple(range(100,127)))
-
 COLOR_MAP_INSTANCES = {
     0: (226., 226., 226.), #(174., 199., 232.),
     1: (120., 94., 240.), #purple 

@@ -1,0 +1,7 @@
+numpy
+opencv-python
+open3d
+pandas
+Pillow
+tqdm
+plyfile

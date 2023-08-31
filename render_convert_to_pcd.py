@@ -4,7 +4,6 @@ import json
 import numpy as np
 from PIL import Image as Image
 from utils.pc_utils import save_point_cloud_w_inst_label
-from utils.color_maps_and_labels import COLOR_MAP, COLOR_MAP_INSTANCES, BODY_PARTS_COLOR_MAP_IDS
 from utils.process_renders_utils import get_pointcloud_mat_scene_mask, add_kinect_noise_to_depth
 
 def extract_scene_pcds(cfg):
