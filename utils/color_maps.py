@@ -1,4 +1,5 @@
 BODY_PARTS_COLOR_MAP_IDS = set(tuple(range(100,127)))
+
 COLOR_MAP = {
     -1: (255., 255., 255.),
     0: (0., 0., 0.),
