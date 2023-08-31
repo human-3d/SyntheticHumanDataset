@@ -79,6 +79,10 @@ Once the rendering is done, this script continues with extracting the point clou
 
 To load the data (e.g. for training a model), we provide a simplified dataloader: [`example_dataloader.py`](example_dataloader.py). We also provide functions to **visualize the labels**. In this example script, you can simply specify the path to the point cloud you wish to visualize, and automatically export *.ply* files where each point is colored with its respective instance or body-part label color. Please note that for training with the synthetic data, we filtered out scenes that have fewer than 20k points. You can also implement a similar filtering logic within your dataloader depending on your needs.
 
+
+
+## BibTeX :pray:
+
 If you find this work helpful and use it in your project, we would be very grateful if you could cite our work **Human3D**:
 
 ```
