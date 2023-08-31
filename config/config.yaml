@@ -1,10 +1,12 @@
 paths:
   scannet_path: /path/to/scannet # directory containing scene****_** subfolders
   synthetic_humans: /path/to/synthetic_humans # directory containing synthetic human meshes
-  output_base: /path/to/output
+  output_base_renders: /path/to/output_renders
+  output_base_pcds: /path/to/output_pcds
   selected_bodies: data/selected_bodies_v3.json
   camera_parameters: data/camera_parameters.json
   faces_segmentation: data/smplx_faces_segmentation_unique.npy
+  kinect_dot_pattern: data/kinect-pattern_3x3.png
 
 camera:
   width: 640 # px
@@ -136,3 +138,8 @@ rendering:
     123: [98., 58., 83.] # leftUpLeg
     124: [222., 25., 45.] # leftHand
     125: [75., 233., 65.] # hips
+
+
+  pcd_computation:
+    add_kinect_noise: True
+    verbose: True

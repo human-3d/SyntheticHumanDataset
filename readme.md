@@ -36,15 +36,17 @@ Configurations are done in *config/config.yaml* file.
 ```
 where k is the number of people generated for the scene.  
 
-3. *output_base* is simply where the data will be saved.
+3. *output_base_renders* is simply where the rendered data will be saved.
+   
+4. *output_base_pcds* is where the resulting scene point clouds will be saved.
 
-4. *selected_bodies* is the path of the file describing in which scene which synthetic human bodies are placed. An example file is given in *data/selected_bodies_v3.json*. Indices can be arranged based on the desired population level and number of humans generated for each sene.
+5. *selected_bodies* is the path of the file describing in which scene which synthetic human bodies are placed. An example file is given in *data/selected_bodies_v3.json*. Indices can be arranged based on the desired population level and number of humans generated for each sene.
 
-5. *camera_parameters* is the path of the file containing the intrinsics of the camera and extrinsics for each rendering in each scene. For each rendering, camera height and the angle is resampled. Refer to our [paper](https://arxiv.org/abs/2212.00786) for more details regarding the process. We provide an example file in *data/camera_parameters.json".
+6. *camera_parameters* is the path of the file containing the intrinsics of the camera and extrinsics for each rendering in each scene. For each rendering, camera height and the angle is resampled. Refer to our [paper](https://arxiv.org/abs/2212.00786) for more details regarding the process. We provide an example file in *data/camera_parameters.json".
 
-6. *faces_segmentation* is the path of the file which maps face indices of smplx model to body parts. It is adapted from [this](https://github.com/Meshcapade/wiki/tree/main/assets/SMPL_body_segmentation/smplx) segmentation with some processing to make mappings unique, i.e. one face is mapped to one body part only. We provide it in *data/smplx_faces_segmentation_unique.py*.
+7. *faces_segmentation* is the path of the file which maps face indices of smplx model to body parts. It is adapted from [this](https://github.com/Meshcapade/wiki/tree/main/assets/SMPL_body_segmentation/smplx) segmentation with some processing to make mappings unique, i.e. one face is mapped to one body part only. We provide it in *data/smplx_faces_segmentation_unique.py*.
 
-7. *samples_per_scene* determines how many renderings are done per scene. *camera_parameters* file needs to be compatible with this number.
+8. *samples_per_scene* determines how many renderings are done per scene. *camera_parameters* file needs to be compatible with this number.
 
 ## Running the pipeline
 After setting the prerequisites, the pipeline can be run simply by:

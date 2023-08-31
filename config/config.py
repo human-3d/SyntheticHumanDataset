@@ -15,7 +15,8 @@ class Config:
             paths = settings["paths"]
             self.scannet_path = paths["scannet_path"]
             self.synthetic_humans_path = paths["synthetic_humans"]
-            self.output_base = paths["output_base"]
+            self.output_base_renders = paths["output_base_renders"]
+            self.output_base_pcds = paths["output_base_pcds"]
             self.selected_bodies_path = paths["selected_bodies"]
             self.camera_parameters_path = paths["camera_parameters"]
             self.faces_segmentation_path = paths["faces_segmentation"]
@@ -34,5 +35,8 @@ class Config:
             self.body_segments_order = rendering["body_segments_order"]
             self.color_map = rendering["color_map"]
 
+            # ___ point cloud computation ___
+            pcd = settings["pcd_computation"]
+            self.add_kinect_noise = pcd["add_kinect_noise"]
+            self.verbose = pcd["verbose"]
 
-cfg = Config()

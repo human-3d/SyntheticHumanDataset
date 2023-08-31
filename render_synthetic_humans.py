@@ -6,34 +6,34 @@ from tqdm import tqdm
 from pathlib import Path
 
 
-def main(args):
+def render_synthetic_humans(cfg):
     # Read selected synthetic bodies per scene
-    selected_bodies = open(args.selected_bodies_path)
+    selected_bodies = open(cfg.selected_bodies_path)
     selected_bodies = json.load(selected_bodies)["scenes"]
 
     # Read camera parameters per scene
-    camera_parameters = json.load(open(args.camera_parameters_path))
+    camera_parameters = json.load(open(cfg.camera_parameters_path))
     cam_intrinsics = np.array(camera_parameters["intrinsics"], dtype=np.float64)
     cam_extrinsics = camera_parameters["extrinsics"]
 
     # Read body part segmentation file
-    faces_segmentation = np.load(args.faces_segmentation_path, allow_pickle=True).item()
+    faces_segmentation = np.load(cfg.faces_segmentation_path, allow_pickle=True).item()
 
     # Id to color, use valid colors to map to ids
     body_parts_color_map_ids = tuple(range(100, 127))
 
     # Dict other way around
-    color_to_id = dict((tuple(v), k) for k, v in args.color_map.items())
+    color_to_id = dict((tuple(v), k) for k, v in cfg.color_map.items())
 
     material = o3d.visualization.rendering.MaterialRecord()
     label_renderer = o3d.visualization.rendering.OffscreenRenderer(
-        args.image_width, args.image_height
+        cfg.image_width, cfg.image_height
     )
     color_renderer = o3d.visualization.rendering.OffscreenRenderer(
-        args.image_width, args.image_height
+        cfg.image_width, cfg.image_height
     )
     instance_renderer = o3d.visualization.rendering.OffscreenRenderer(
-        args.image_width, args.image_height
+        cfg.image_width, cfg.image_height
     )
 
     # Don't mess up with pixel values! We dont want shading
@@ -44,24 +44,24 @@ def main(args):
     # Set cameras
     label_renderer.scene.camera.set_projection(
         cam_intrinsics,
-        args.near_plane,
-        args.far_plane,
-        args.image_width,
-        args.image_height,
+        cfg.near_plane,
+        cfg.far_plane,
+        cfg.image_width,
+        cfg.image_height,
     )
     color_renderer.scene.camera.set_projection(
         cam_intrinsics,
-        args.near_plane,
-        args.far_plane,
-        args.image_width,
-        args.image_height,
+        cfg.near_plane,
+        cfg.far_plane,
+        cfg.image_width,
+        cfg.image_height,
     )
     instance_renderer.scene.camera.set_projection(
         cam_intrinsics,
-        args.near_plane,
-        args.far_plane,
-        args.image_width,
-        args.image_height,
+        cfg.near_plane,
+        cfg.far_plane,
+        cfg.image_width,
+        cfg.image_height,
     )
 
     # Iterate through all scenes
@@ -74,7 +74,7 @@ def main(args):
         assert cam_extrinsics[scene_idx]["scene"] == scene_name
 
         # Check if the folder is already created, skip if already rendered the scene.
-        output_path = Path(args.output_base) / scene_name
+        output_path = Path(cfg.output_base_renders) / scene_name
         if output_path.exists():
             continue
 
@@ -92,20 +92,20 @@ def main(args):
         # Read label and color meshes
         scene_label_mesh = o3d.io.read_triangle_mesh(
             str(
-                Path(args.scannet_path)
+                Path(cfg.scannet_path)
                 / scene_name
                 / f"{scene_name}_vh_clean_2.labels.ply"
             )
         )
         scene_color_mesh = o3d.io.read_triangle_mesh(
-            str(Path(args.scannet_path) / scene_name / f"{scene_name}_vh_clean_2.ply")
+            str(Path(cfg.scannet_path) / scene_name / f"{scene_name}_vh_clean_2.ply")
         )
 
         # Get scene center
         scene_center = cam_extrinsics[scene_idx]["scene_center"]
 
         # Repeat for required sample count
-        for sample in range(args.samples_per_scene):
+        for sample in range(cfg.samples_per_scene):
             # Set renderers
             label_renderer.scene.clear_geometry()
             color_renderer.scene.clear_geometry()
@@ -123,7 +123,7 @@ def main(args):
             for k, idx in enumerate(human_indices):
                 formatted_ind = "{:02d}".format(idx)
                 human = o3d.io.read_triangle_mesh(
-                    f"{args.synthetic_humans_path}/{scene_name}/{scene_name}_{formatted_ind}.ply"
+                    f"{cfg.synthetic_humans_path}/{scene_name}/{scene_name}_{formatted_ind}.ply"
                 )
 
                 # Human label is (0,0,1)
@@ -142,14 +142,14 @@ def main(args):
 
                 # Add human parts
                 vertices = human.vertices
-                for idx, body_part in enumerate(args.body_segments_order):
+                for idx, body_part in enumerate(cfg.body_segments_order):
                     body_part_faces = o3d.utility.Vector3iVector(
                         faces_segmentation[body_part]
                     )
                     body_part_mesh = o3d.geometry.TriangleMesh(
                         vertices, body_part_faces
                     )
-                    color = np.array(args.color_map[100 + idx]) / 255.0
+                    color = np.array(cfg.color_map[100 + idx]) / 255.0
                     body_part_mesh.paint_uniform_color(color)
                     label_renderer.scene.add_geometry(
                         f"human{k}_{idx}", body_part_mesh, material
@@ -198,27 +198,27 @@ def main(args):
             )
 
             # Create id image and mask
-            id_img = np.zeros((args.image_height, args.image_width))
-            instance_id_img = np.zeros((args.image_height, args.image_width))
-            scene_mask = np.ones((args.image_height, args.image_width), dtype=bool)
+            id_img = np.zeros((cfg.image_height, cfg.image_width))
+            instance_id_img = np.zeros((cfg.image_height, cfg.image_width))
+            scene_mask = np.ones((cfg.image_height, cfg.image_width), dtype=bool)
 
             # Iterate each pixel for id image and mask
-            for i in range(args.image_height):
-                for j in range(args.image_width):
+            for i in range(cfg.image_height):
+                for j in range(cfg.image_width):
                     label_color = tuple(label_img_array[i, j, :])
                     instance_color = tuple(instance_img_array[i, j, :])
 
                     id = color_to_id.get(label_color)
-                    if id in args.valid_color_map_ids or id in body_parts_color_map_ids:
+                    if id in cfg.valid_color_map_ids or id in body_parts_color_map_ids:
                         if id == 31:
-                            label_img_array[i, j, :] = args.color_map[41]
+                            label_img_array[i, j, :] = cfg.color_map[41]
                         if id == 41:
                             id = 31  # very little real humans in the scene
                         id_img[i, j] = id
 
                     if (
                         id in body_parts_color_map_ids
-                        and id not in args.valid_color_map_ids
+                        and id not in cfg.valid_color_map_ids
                     ):
                         instance_id_img[i, j] = instance_color[0] / 20.0
                     elif id == 0 or id == -1:
