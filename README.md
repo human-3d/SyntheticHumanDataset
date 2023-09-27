@@ -2,13 +2,13 @@
 This repository contains the code to generate synthetic human-scene interaction dataset used in [3D Segmentation of Humans in Point Clouds with Synthetic Data](https://arxiv.org/abs/2212.00786), accepted at ICCV 2023. 
 
 ```
-@article{human3d,
-  title     = {{3D Segmentation of Humans in Point Clouds with Synthetic Data}},
-  author    = {Takmaz, Ay\c{c}a and Schult, Jonas and Kaftan, Irem and Ak\c{c}ay, Mertcan 
-               and Leibe, Bastian and Sumner, Robert and Engelmann, Francis and Tang, Siyu},
-  booktitle = {{arXiv:2212.00786}},
-  year      = {2022}
-}
+@inproceedings{human3d,
+    title     = {{3D Segmentation of Humans in Point Clouds with Synthetic Data}},
+    author    = {Takmaz, Ay\c{c}a and Schult, Jonas and Kaftan, Irem and Ak\c{c}ay, Mertcan 
+                  and Leibe, Bastian and Sumner, Robert and Engelmann, Francis and Tang, Siyu},
+    booktitle = {{International Conference on Computer Vision}},
+    year      = {2023}
+  }
 ```
 
 
@@ -86,13 +86,13 @@ To load the data (e.g. for training a model), we provide a simplified dataloader
 If you find this work helpful and use it in your project, we would be very grateful if you could cite our work **Human3D**:
 
 ```
-@article{human3d,
-  title     = {{3D Segmentation of Humans in Point Clouds with Synthetic Data}},
-  author    = {Takmaz, Ay\c{c}a and Schult, Jonas and Kaftan, Irem and Ak\c{c}ay, Mertcan 
-               and Leibe, Bastian and Sumner, Robert and Engelmann, Francis and Tang, Siyu},
-  booktitle = {{arXiv:2212.00786}},
-  year      = {2022}
-}
+@inproceedings{human3d,
+    title     = {{3D Segmentation of Humans in Point Clouds with Synthetic Data}},
+    author    = {Takmaz, Ay\c{c}a and Schult, Jonas and Kaftan, Irem and Ak\c{c}ay, Mertcan 
+                  and Leibe, Bastian and Sumner, Robert and Engelmann, Francis and Tang, Siyu},
+    booktitle = {{International Conference on Computer Vision}},
+    year      = {2023}
+  }
 ```
 
 
